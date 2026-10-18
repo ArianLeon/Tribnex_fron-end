@@ -3,9 +3,251 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gemelo Tributario — Tu compañero de cumplimiento tributario</title>
-<meta name="description" content="Gemelo Tributario es tu asistente inteligente para cumplir con tus obligaciones fiscales en Ecuador, con base en la normativa del SRI.">
+<title>Tribnex — Tu compañero de cumplimiento tributario</title>
+<meta name="description" content="Tribnex es tu asistente inteligente para cumplir con tus obligaciones fiscales en Ecuador, con base en la normativa del SRI.">
 <link rel="stylesheet" href="css/styles.css">
+
+<style>
+/* ============================================================
+   REDISEÑO LANDING — Tribnex (Tribnex)
+   Todo escopado bajo .landing para no afectar el resto de la app.
+   Paleta: azul de marca (--orange-500 en styles.css), navy, blanco
+   + nuevo acento amarillo #F2B84B.
+   ============================================================ */
+.landing{
+  --yellow-500:#F2B84B;
+  --yellow-400:#F6CA74;
+  --yellow-100:#FDF3DE;
+  --blue-500:var(--orange-500);
+  --blue-400:var(--orange-400);
+  --blue-100:var(--orange-100);
+  background:
+    radial-gradient(ellipse 900px 500px at 85% -10%, rgba(242,184,75,.10), transparent 60%),
+    radial-gradient(ellipse 700px 500px at -5% 10%, rgba(91,91,250,.18), transparent 55%),
+    var(--navy-950);
+  overflow-x:clip;
+}
+
+/* ---------- NAV ---------- */
+.landing-nav{
+  position:sticky;top:0;z-index:60;
+  background:rgba(10,22,40,.72);
+  backdrop-filter:blur(14px) saturate(140%);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:16px 6vw;
+}
+.landing-nav .btn-primary{
+  background:var(--yellow-500);color:var(--navy-950);font-weight:700;
+  box-shadow:0 8px 20px -8px rgba(242,184,75,.65);
+}
+.landing-nav .btn-primary:hover{background:var(--yellow-400);}
+
+/* ---------- HERO ---------- */
+.landing-hero{position:relative;z-index:2;padding-top:48px;}
+.eyebrow-mono{
+  background:rgba(242,184,75,.1);border:1px solid rgba(242,184,75,.3);
+  padding:7px 14px 7px 10px;border-radius:999px;color:var(--yellow-400);
+}
+.eyebrow-mono::before{background:var(--yellow-400);}
+
+.landing-hero h1{font-size:clamp(36px,4.6vw,56px);}
+.landing-hero h1 em{
+  background:linear-gradient(90deg,var(--yellow-400),var(--blue-400));
+  -webkit-background-clip:text;background-clip:text;color:transparent;font-style:normal;
+}
+.typewriter-cursor{background:var(--yellow-400);}
+
+.landing-cta-row .btn-primary{
+  background:var(--yellow-500);color:var(--navy-950);font-weight:700;
+  box-shadow:0 10px 26px -8px rgba(242,184,75,.6);
+}
+.landing-cta-row .btn-primary:hover{background:var(--yellow-400);transform:translateY(-1px);}
+.landing-cta-row .btn-outline{
+  border:1px solid rgba(255,255,255,.22);color:#fff;background:rgba(255,255,255,.04);
+}
+.landing-cta-row .btn-outline:hover{border-color:#fff;background:rgba(255,255,255,.1);}
+
+.diff-strip{margin-top:40px;}
+.diff-item{
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);
+  border-radius:14px;padding:14px 16px;transition:border-color .2s ease, transform .2s ease;
+}
+.diff-item:hover{border-color:rgba(242,184,75,.4);transform:translateY(-2px);}
+.diff-item svg{color:var(--yellow-400);}
+
+.hero-badge{background:var(--yellow-500);color:var(--navy-950);font-weight:800;}
+.hero-card{border:1px solid rgba(255,255,255,.6);}
+.hero-card .norm-tag{background:var(--navy-950);color:var(--yellow-400);}
+.hero-card .norm-tag::before{color:var(--yellow-400);}
+.status-pill.ok{background:#E3F9EE;color:#1FAE68;}
+.status-pill.warn{background:var(--yellow-100);color:#A6711C;}
+.status-pill.pending{background:var(--blue-100);color:var(--blue-500);}
+.next-due-mini{background:linear-gradient(135deg,var(--yellow-100),var(--bg));}
+.next-due-mini .ic{background:var(--yellow-500);color:var(--navy-950);}
+
+/* glow decorativo detrás del hero-card */
+.hero-visual::before{
+  content:'';position:absolute;top:-60px;right:-40px;width:320px;height:320px;
+  background:radial-gradient(circle, rgba(242,184,75,.35), transparent 70%);
+  filter:blur(10px);z-index:0;pointer-events:none;
+}
+
+/* ---------- STATS ---------- */
+.landing-stats{padding-top:70px;}
+.landing-stats .card{
+  background:rgba(255,255,255,.98);border:none;
+  box-shadow:0 20px 50px -20px rgba(0,0,0,.45);
+}
+.stat-tile .icon.icon-purple{background:var(--blue-100);color:var(--blue-500);}
+.stat-tile .icon.icon-green{background:#E3F9EE;color:#1FAE68;}
+.stat-tile .icon.icon-orange{background:var(--yellow-100);color:#A6711C;}
+.stat-tile .num{font-family:var(--font-display);font-size:26px;font-weight:800;color:var(--navy-950);}
+
+/* ---------- SECCIONES "eyebrow" sobre fondo oscuro ---------- */
+.landing-plans .plans-head h2,
+.landing-steps .plans-head h2{color:#fff;}
+.landing-plans .plans-head p,
+.landing-steps .plans-head p{color:rgba(255,255,255,.6);}
+
+/* ---------- "¿Por qué Gemelo Tributario?" ---------- */
+.landing-plans:first-of-type .plan-card{
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(6px);
+}
+.landing-plans:first-of-type .plan-card h3{color:#fff;}
+.landing-plans:first-of-type .plan-card p{color:rgba(255,255,255,.58);}
+.landing-plans:first-of-type .plan-card:hover{border-color:rgba(242,184,75,.45);}
+.landing-plans:first-of-type .plan-card:nth-child(2) .action-icon{background:var(--yellow-100);color:#A6711C;}
+.landing-plans:first-of-type .plan-card .action-icon{
+  width:46px;height:46px;border-radius:13px;
+}
+
+/* ---------- "¿Cómo funciona?" ---------- */
+.step-circle{
+  background:linear-gradient(135deg,var(--yellow-500),var(--yellow-400));
+  color:var(--navy-950);box-shadow:0 10px 24px -8px rgba(242,184,75,.55);
+}
+
+/* ============================================================
+   PLANES Y SERVICIOS — tarjetas de precio, costos en 0.00
+   ============================================================ */
+.pricing-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+}
+.price-card{
+  position:relative;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:20px;
+  padding:28px 24px;
+  display:flex;flex-direction:column;
+  transition:transform .2s ease, border-color .2s ease, background .2s ease;
+}
+.price-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(242,184,75,.5);
+  background:rgba(255,255,255,.07);
+}
+.price-card.featured{
+  border-color:var(--yellow-500);
+  background:linear-gradient(160deg, rgba(242,184,75,.1), rgba(255,255,255,.04));
+  box-shadow:0 24px 60px -24px rgba(242,184,75,.4);
+}
+.price-ribbon{
+  position:absolute;top:-12px;left:24px;
+  background:var(--yellow-500);color:var(--navy-950);
+  font-size:11px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;
+  padding:5px 12px;border-radius:999px;
+}
+.price-card-icon{
+  width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.08);color:var(--yellow-400);margin-bottom:18px;flex-shrink:0;
+}
+.price-card h3{font-size:16.5px;color:#fff;margin-bottom:6px;}
+.price-card .price-tagline{font-size:12.5px;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:18px;min-height:38px;}
+.price-amount{display:flex;align-items:baseline;gap:5px;margin-bottom:4px;}
+.price-amount .num{font-family:var(--font-display);font-size:38px;font-weight:800;color:#fff;}
+.price-amount .cycle{font-size:12.5px;color:rgba(255,255,255,.5);}
+.price-note{font-size:11px;color:var(--yellow-400);font-weight:600;margin-bottom:20px;}
+.price-features{list-style:none;margin:0 0 24px;padding:0;display:flex;flex-direction:column;gap:10px;flex:1;}
+.price-features li{display:flex;align-items:flex-start;gap:9px;font-size:12.5px;color:rgba(255,255,255,.72);line-height:1.4;}
+.price-features li svg{color:var(--yellow-400);flex-shrink:0;margin-top:2px;}
+.price-card .btn{width:100%;}
+.price-card .btn-outline{border-color:rgba(255,255,255,.25);color:#fff;}
+.price-card .btn-outline:hover{border-color:var(--yellow-400);color:var(--yellow-400);}
+.price-card.featured .btn-primary{
+  background:var(--yellow-500);color:var(--navy-950);font-weight:700;
+}
+.price-card.featured .btn-primary:hover{background:var(--yellow-400);}
+
+.services-strip-head{display:flex;align-items:center;gap:10px;margin:48px 0 18px;}
+.services-strip-head span{
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.4);
+}
+.services-strip-head::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.1);}
+
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.service-mini{
+  display:flex;gap:14px;align-items:flex-start;padding:18px;
+  background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.08);border-radius:14px;
+  transition:border-color .2s ease, transform .2s ease;
+}
+.service-mini:hover{border-color:rgba(242,184,75,.4);transform:translateY(-2px);}
+.service-mini .ic{
+  width:36px;height:36px;border-radius:10px;flex-shrink:0;
+  background:var(--yellow-100);color:#A6711C;display:flex;align-items:center;justify-content:center;
+}
+.service-mini strong{display:block;font-size:13.5px;color:#fff;margin-bottom:3px;}
+.service-mini p{font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;}
+
+/* ---------- FORMULARIO DE OPINIONES — mismo HTML/ids, solo más bonito ---------- */
+.landing-feedback{position:relative;z-index:2;}
+.feedback-card{
+  background:#fff;border:none;border-radius:24px;
+  box-shadow:0 30px 70px -28px rgba(0,0,0,.55);
+  position:relative;overflow:hidden;
+}
+.feedback-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--yellow-500),var(--blue-500));
+}
+.landing-feedback .eyebrow-mono{color:var(--blue-500);background:var(--blue-100);border-color:transparent;}
+.landing-feedback .eyebrow-mono::before{background:var(--blue-500);}
+.star-btn:hover,.star-btn.active{color:var(--yellow-500);}
+.feedback-form .input,.feedback-form textarea{border-radius:12px;}
+.feedback-form .input:focus,.feedback-form textarea:focus{
+  border-color:var(--yellow-500);box-shadow:0 0 0 3px rgba(242,184,75,.18);
+}
+.feedback-form button[type="submit"]{
+  background:var(--navy-950);
+}
+.feedback-form button[type="submit"]:hover{background:var(--navy-900);}
+.feedback-item{background:var(--bg);border-color:var(--border);}
+.feedback-item .stars-mini{color:var(--yellow-500);}
+
+/* ---------- FOOTER ---------- */
+.footer-landing{
+  background:var(--navy-900);position:relative;z-index:2;
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.footer-landing::before{
+  content:'';display:block;height:1px;
+  background:linear-gradient(90deg,transparent,var(--yellow-500),transparent);
+}
+.social-btn:hover{background:var(--yellow-500);color:var(--navy-950);border-color:var(--yellow-500);}
+.footer-contact-item svg{color:var(--yellow-400);}
+.footer-col a:hover{color:var(--yellow-400);}
+
+@media (max-width:1080px){
+  .pricing-grid{grid-template-columns:repeat(2,1fr);}
+  .services-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:700px){
+  .pricing-grid{grid-template-columns:1fr;}
+  .services-grid{grid-template-columns:1fr;}
+}
+</style>
 </head>
 <body>
 
@@ -14,7 +256,7 @@
   <!-- NAV — un solo botón de acceso: "Ver app" -->
   <nav class="landing-nav">
     <div class="brand">
-      <img src="img/robotsolo.png" alt="Gemelo Tributario" class="brand-logo-img" style="height:150px;width:auto;display:block;">
+      <img src="img/robotsolo.png" alt="Tribnex" class="brand-logo-img" style="height:50px;width:auto;display:block;">
     </div>
     <a href="Login.html" class="btn btn-primary btn-sm">Ver app</a>
   </nav>
@@ -28,7 +270,12 @@
         <span id="hero-typewriter" aria-hidden="true"></span><span class="typewriter-cursor" aria-hidden="true"></span>
       </h1>
 
-      <p class="lead">Gemelo Tributario es tu asistente inteligente para cumplir con tus obligaciones fiscales en Ecuador. No ajustamos tus cuentas como un contador: te guiamos según la normativa del SRI para que tu negocio esté siempre en regla.</p>
+      <p class="lead">Tribnex es tu asistente inteligente para cumplir con tus obligaciones fiscales en Ecuador. No ajustamos tus cuentas como un contador: te guiamos según la normativa del SRI para que tu negocio esté siempre en regla.</p>
+
+      <div class="landing-cta-row">
+        <a href="Login.html" class="btn btn-primary">Comenzar ahora</a>
+        <a href="#como-funciona" class="btn btn-outline">Ver cómo funciona</a>
+      </div>
 
       <div class="diff-strip">
         <div class="diff-item">
@@ -50,7 +297,7 @@
       <div class="hero-dots"></div>
       <span class="hero-badge">✓ Al día con el SRI</span>
       <div class="hero-card float-anim">
-        <span class="norm-tag">Tu gemelo digital</span>
+        <span class="norm-tag">Tribnex</span>
         <h3>Estado tributario en tiempo real</h3>
         <p>Así se ve tu panel apenas ingresas: cada obligación, con su fecha y su base legal.</p>
 
@@ -117,11 +364,11 @@
     </div>
   </section>
 
-  <!-- ¿POR QUÉ GEMELO TRIBUTARIO? — tarjetas -->
+
   <section class="landing-plans">
     <div class="plans-head reveal">
       <span class="eyebrow-mono">Nuestra diferencia</span>
-      <h2>¿Por qué Gemelo Tributario?</h2>
+      <h2>¿Por qué Tribnex?</h2>
       <p>Construido para microempresarios y profesionales independientes que no tienen tiempo de perderse en la normativa.</p>
     </div>
 
@@ -153,10 +400,10 @@
   </section>
 
   <!-- ¿CÓMO FUNCIONA? — pasos numerados -->
-  <section class="landing-steps">
+  <section class="landing-steps" id="como-funciona">
     <div class="plans-head reveal">
       <span class="eyebrow-mono">Cómo te ayuda</span>
-      <h2>¿Cómo funciona Gemelo Tributario?</h2>
+      <h2>¿Cómo funciona Tribnex?</h2>
       <p>Tres pasos entre tú y una declaración tranquila.</p>
     </div>
 
@@ -181,72 +428,91 @@
     </div>
   </section>
 
-  <!-- PLANES Y SERVICIOS-->
+  <!-- PLANES Y SERVICIOS — tarjetas de precio (costos en $0.00: aún por definir) -->
   <section class="landing-plans">
     <div class="plans-head reveal">
       <span class="eyebrow-mono">Modelo de negocio</span>
       <h2>Planes y servicios</h2>
-      <p>Así generamos valor para profesionales independientes y empresas que necesitan mantenerse al día con el SRI.</p>
+      <p>Así generamos valor para profesionales independientes y empresas que necesitan mantenerse al día con el SRI. Precios por definir.</p>
     </div>
 
-    <div class="grid grid-3">
-      <div class="card card-pad plan-card reveal reveal-delay-1">
-        <div class="action-icon icon-orange">
+    <div class="pricing-grid">
+
+      <div class="price-card reveal reveal-delay-1">
+        <div class="price-card-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v3M16 3v3"/></svg>
         </div>
         <h3>Suscripción mensual</h3>
-        <p>Acceso a funciones avanzadas y beneficios exclusivos.</p>
+        <p class="price-tagline">Acceso completo a funciones avanzadas y beneficios exclusivos.</p>
+        <div class="price-amount"><span class="num">$0.00</span><span class="cycle">/ mes</span></div>
+        <span class="price-note">Precio por definir</span>
+        <ul class="price-features">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Calendario y calculadora ilimitados</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Gemelo Chat con IA</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Cancela cuando quieras</li>
+        </ul>
+        <a href="Login.html" class="btn btn-outline">Probar</a>
       </div>
 
-      <div class="card card-pad plan-card reveal reveal-delay-2">
-        <div class="action-icon icon-orange">
+      <div class="price-card featured reveal reveal-delay-2">
+        <span class="price-ribbon">Más popular</span>
+        <div class="price-card-icon" style="background:rgba(242,184,75,.18);color:var(--yellow-500);">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 2v4M16 2v4"/><path d="M8 14l2.5 2.5L16 11"/></svg>
         </div>
         <h3>Suscripción anual</h3>
-        <p>Pago anticipado con descuento.</p>
+        <p class="price-tagline">Todo lo mensual, con pago anticipado y descuento por el año completo.</p>
+        <div class="price-amount"><span class="num">$0.00</span><span class="cycle">/ año</span></div>
+        <span class="price-note">Precio por definir</span>
+        <ul class="price-features">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Todo lo del plan mensual</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Descuento por pago anual</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Soporte prioritario</li>
+        </ul>
+        <a href="Login.html" class="btn btn-primary">Probar</a>
       </div>
 
-      <div class="card card-pad plan-card reveal reveal-delay-3">
-        <div class="action-icon icon-orange">
+      <div class="price-card reveal reveal-delay-3">
+        <div class="price-card-icon">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21V9l9-6 9 6v12"/><path d="M9 21v-6h6v6"/></svg>
         </div>
-        <h3>Plan Premium empresarial</h3>
-        <p>Múltiples usuarios, control por sucursales, panel administrativo, reportes ejecutivos e integración con sistemas contables.</p>
+        <h3>Premium empresarial</h3>
+        <p class="price-tagline">Múltiples usuarios, sucursales, panel administrativo y reportes ejecutivos.</p>
+        <div class="price-amount"><span class="num">$0.00</span><span class="cycle">/ mes</span></div>
+        <span class="price-note">Precio por definir</span>
+        <ul class="price-features">
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Control por sucursales</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Integración con sistemas contables</li>
+          <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Reportes ejecutivos</li>
+        </ul>
+        <a href="#" class="btn btn-outline">Contactar ventas</a>
       </div>
 
-      <div class="card card-pad plan-card reveal reveal-delay-1">
-        <div class="action-icon icon-orange">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg>
-        </div>
-        <h3>Capacitaciones tributarias</h3>
-        <p>Cursos, talleres y certificaciones en tributación ecuatoriana.</p>
-      </div>
+    </div>
 
-      <div class="card card-pad plan-card reveal reveal-delay-2">
-        <div class="action-icon icon-orange">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-3.6 4.4-5.5 7.5-5.5s6.1 1.9 7.5 5.5"/></svg>
-        </div>
-        <h3>Asesorías tributarias personalizadas</h3>
-        <p>Consultas especializadas con expertos tributarios.</p>
+    <div class="services-strip-head"><span>Servicios adicionales</span></div>
+    <div class="services-grid">
+            <div class="service-mini reveal reveal-delay-1">
+        <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10L12 4 2 10l10 6 10-6z"/><path d="M6 12v5c0 1.5 2.7 3 6 3s6-1.5 6-3v-5"/></svg></span>
+        <div><strong>Capacitaciones tributarias</strong><p>Cursos y talleres prácticos para entender tus obligaciones con el SRI.</p></div>
       </div>
-
-      <div class="card card-pad plan-card reveal reveal-delay-3">
-        <div class="action-icon icon-orange">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
-        </div>
-        <h3>Servicios corporativos</h3>
-        <p>Implementación empresarial, integración tecnológica y soporte especializado.</p>
+      <div class="service-mini reveal reveal-delay-2">
+        <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-3.6 4.4-5.5 7.5-5.5s6.1 1.9 7.5 5.5"/></svg></span>
+        <div><strong>Asesorías personalizadas</strong><p>Consultas especializadas con expertos tributarios.</p></div>
+      </div>
+      <div class="service-mini reveal reveal-delay-3">
+        <span class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>
+        <div><strong>Servicios corporativos</strong><p>Implementación, integración tecnológica y soporte especializado.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- formulario de satisfacción -->
+  <!-- formulario de satisfacción (mismos ids/clases: no se tocó su funcionamiento) -->
   <section class="landing-feedback">
     <div class="card feedback-card reveal">
       <div class="plans-head" style="margin-bottom:22px;">
         <span class="eyebrow-mono">Tu opinión</span>
         <h2 style="color:var(--text-900);">¿Qué te pareció ?</h2>
-        <p style="color:var(--text-500);">Cuéntanos qué mejorarías: cada comentario nos ayuda a construir una mejor versión de Gemelo Tributario.</p>
+        <p style="color:var(--text-500);">Cuéntanos qué mejorarías: cada comentario nos ayuda a construir una mejor versión de Tribnex.</p>
       </div>
 
       <form id="feedback-form" class="feedback-form">
@@ -295,8 +561,8 @@
   <footer class="footer-landing">
     <div class="footer-grid">
       <div class="footer-brand">
-        <img src="img/sin_fondo.png" alt="Gemelo Tributario" class="brand-logo-img">
-        <p class="footer-tagline">Tu gemelo digital para cumplir con el SRI, sin perderte en la letra pequeña.</p>
+        <img src="img/sin_fondo.png" alt="Tribnex" class="brand-logo-img">
+        <p class="footer-tagline">Tribnex para cumplir con el SRI, sin perderte en la letra pequeña.</p>
         <div class="footer-social">
           <a href="#" class="social-btn" aria-label="LinkedIn">in</a>
           <a href="#" class="social-btn" aria-label="Instagram">ig</a>
@@ -333,7 +599,7 @@
         </div>
         <div class="footer-contact-item">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-          <span>Equipo@gemelotributario.com</span>
+          <span>tribnexsoporte@gmail.com</span>
         </div>
         <div class="footer-contact-item">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -343,7 +609,7 @@
     </div>
 
     <div class="footer-bottom">
-      <span>© <span id="footer-year"></span> Gemelo Tributario · Cumplimiento tributario para tu negocio</span>
+      <span>© <span id="footer-year"></span>Tribnex</span>
       <div class="footer-bottom-links">
         <a href="#">Términos</a>
         <a href="#">Privacidad</a>
